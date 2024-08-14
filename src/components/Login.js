@@ -14,7 +14,12 @@ const Login = () => {
 
   return (
     <div>
-      <button onClick={handleKakaoLogin} className="KakaoButton">Login with Kakao</button>
+      <img
+        src="/images/kakao_login_medium_narrow.png"
+        alt="Kakao Login"
+        onClick={handleKakaoLogin}
+        style={{ cursor: 'pointer' }}
+      />
     </div>
   );
 };
