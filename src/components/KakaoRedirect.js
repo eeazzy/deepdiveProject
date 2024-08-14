@@ -4,38 +4,40 @@ import { useEffect } from "react";
 export function KakaoRedirect() {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
-  console.log('인가 코드:', code);
 
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
   };
 
   useEffect(() => {
-    fetch(`http://your-backend-api.com/oauth/kakao?code=${code}`, {
+    fetch(`http://localhost:3001/oauth/kakao?code=${code}`, {
       method: "POST",
       headers: headers,
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('백엔드 응답:', data);  // 백엔드에서 받은 응답 출력
-        if (data.success) {
-          // 로그인 성공 시 처리할 로직 (예: 사용자 정보 저장, 페이지 이동 등)
-          navigate('/dashboard');  // 대시보드 페이지로 이동
-        } else {
-          // 로그인 실패 처리
-          alert('로그인 실패: ' + data.message);
-        }
-      })
-      .catch((error) => {
-        console.error("오류 발생", error);
-      });
-  }, [code, navigate]);
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('서버 응답이 실패했습니다.');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success) {
+        // 로그인 성공 시 사용자 정보를 넘겨주며 메인 화면으로 이동
+        navigate('/main', { state: { nickname: data.nickname, profileImageUrl: data.profile_image_url } });
+      } else {
+        // 로그인 실패 시 로그인 화면으로 이동
+        alert('로그인 실패: ' + data.message);
+        navigate('/');
+      }
+    })
+    .catch((error) => {
+      console.error("오류 발생:", error);
+      // 로그인 실패 시 로그인 화면으로 이동
+      navigate('/');
+    });
+}, [code, navigate]);
 
-  return (
-    <div>
-      <h1>로그인 중입니다.</h1>
-    </div>
-  );
+return null; // 화면에 아무것도 렌더링하지 않음
 }
 
 export default KakaoRedirect;
