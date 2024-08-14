@@ -1,43 +1,36 @@
 import React from 'react';
+import KakaoLogin from "react-kakao-login";
 
 const Login = () => {
-  const handleLogin = () => {
-    //TODO 카카오 로그인 로직
-    console.log("Kakao Login button clicked");
+    const kakaoClientId = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY; 
+  
+    const kakaoOnSuccess = (response) => {
+        console.log("로그인 성공:", response);
+        const { profile, response: { access_token } } = response;
+        console.log('Kakao Profile:', profile);
+        console.log('Access Token:', access_token);
+        // 로그인 성공 후 인가 코드는 /auth 경로로 리디렉션
+    };
+  
+    const kakaoOnFailure = (error) => {
+      console.error("로그인 실패:", error);
+    };
+  
+    return (
+        <div>
+          <h1>카카오 로그인</h1>
+          <KakaoLogin
+            token={kakaoClientId}
+            onSuccess={kakaoOnSuccess}
+            onFail={kakaoOnFailure}
+            render={({ onClick }) => (
+              <button onClick={onClick}>
+                Login with Kakao
+              </button>
+            )}
+          />
+        </div>
+    );
   };
-
-  return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>마실 나갈 땐? 마실댕</h1>
-      <button style={styles.button} onClick={handleLogin}>
-        Login with Kakao
-      </button>
-    </div>
-  );
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    backgroundColor: '#f7f7f7',
-  },
-  title: {
-    marginBottom: '20px',
-    fontSize: '24px',
-    fontWeight: 'bold',
-  },
-  button: {
-    padding: '10px 20px',
-    fontSize: '16px',
-    backgroundColor: '#ffeb00',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-};
-
-export default Login;
+  
+  export default Login;
