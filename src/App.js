@@ -1,12 +1,16 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from './components/Login';
-import Auth from './components/Auth';
+import KakaoRedirect from "./components/KakaoRedirect";
 
 function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/oauth" element={<KakaoRedirect />} />
+      </Routes>
+    </Router>
   );
 }
 
