@@ -21,9 +21,11 @@ export function KakaoRedirect() {
       return response.json();
     })
     .then((data) => {
+      console.log('Response data:', data);
       if (data.success) {
-        // 로그인 성공 시 사용자 정보를 넘겨주며 메인 화면으로 이동
-        navigate('/main', { state: { nickname: data.nickname, profileImageUrl: data.profile_image_url } });
+        console.log('Navigating to main page with user_id:', data.user_id);
+        sessionStorage.setItem('userId', data.user_id);
+        navigate('/main');
       } else {
         // 로그인 실패 시 로그인 화면으로 이동
         alert('로그인 실패: ' + data.message);
