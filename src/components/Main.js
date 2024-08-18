@@ -19,7 +19,6 @@ const clearCookies = () => {
 };
 
 const Main = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
@@ -36,7 +35,8 @@ const Main = () => {
   };
 
   const goToChatbot = () => {
-    navigate('/chatbot'); // 챗봇 페이지로 이동
+    const userId = sessionStorage.getItem('userId');
+    navigate('/chatbot', { state: { userId } }); // 챗봇 페이지로 이동
   };
 
   useEffect(() => {
