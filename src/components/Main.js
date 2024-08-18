@@ -1,37 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-const clearCookies = () => {
-  const cookies = document.cookie.split("; ");
-  for (let c = 0; c < cookies.length; c++) {
-    const d = window.location.hostname.split(".");
-    while (d.length > 0) {
-      const cookieBase = `${encodeURIComponent(cookies[c].split(";")[0].split("=")[0])}=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=${d.join(".")}; path=`;
-      const p = window.location.pathname.split('/');
-      document.cookie = `${cookieBase}/`;
-      while (p.length > 0) {
-        document.cookie = cookieBase + p.join('/');
-        p.pop();
-      }
-      d.shift();
-    }
-  }
-};
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
   const handleLogout = () => {
-    // 로컬 스토리지에서 토큰 제거
-    localStorage.clear();
-    sessionStorage.clear();
-    clearCookies();
-    // 카카오 로그아웃 URL 생성
-    const kakaoLogoutUrl = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY}&logout_redirect_uri=http://localhost:3000/oauth_logout`;
-    
-    // 카카오 로그아웃 페이지로 리다이렉트
-    window.location.href = kakaoLogoutUrl;
+    navigate('/oauth_logout');
   };
 
   const goToChatbot = () => {
