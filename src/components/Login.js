@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Login.css';
 
 const K_REST_API_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY;
 const K_REDIRECT_URI = `http://localhost:3000/oauth`; // Redirect URI
@@ -22,12 +23,22 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
+      <div className="text-container">
+        <h1>마실 나갈 땐? 마실댕</h1>
+      </div>
+      <div className="dog-image-container">
+        <img
+          src="/images/eazy.png"
+          alt="이지"
+          className="dog-image"
+        />
+      </div>
       <img
         src="/images/kakao_login_medium_narrow.png"
         alt="Kakao Login"
         onClick={handleKakaoLogin}
-        style={{ cursor: 'pointer' }}
+        className="login-button"
       />
     </div>
   );
