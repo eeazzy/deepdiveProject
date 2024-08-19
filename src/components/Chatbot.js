@@ -5,6 +5,7 @@ import '../styles/Chatbot.css';
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
+    const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     const userId = location.state?.userId;
@@ -16,7 +17,8 @@ const Chatbot = () => {
             return;
         }
         
-        // 컴포넌트가 로드될 때 서버에서 대화 기록을 가져옴
+        // 컴포넌트가 로드될 때 사용자 데이터와 서버에서 대화 기록을 가져옴
+        fetchUserData();
         fetchChatHistory();
     }, [userId, navigate]);
 
@@ -26,6 +28,21 @@ const Chatbot = () => {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
     }, [messages]); // messages가 변경될 때마다 실행
+
+    const fetchUserData = () => {
+        fetch(`http://localhost:3001/api/user/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    setUserData(data.user);
+                } else {
+                    console.error('Failed to load user data:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+            });
+    };
 
     const fetchChatHistory = () => {
         fetch(`http://localhost:3001/chat/${userId}`)
@@ -131,13 +148,22 @@ const Chatbot = () => {
             <button className="reset-button" onClick={handleResetChat}>
                 초기화
             </button>
-            <h1>챗봇 페이지</h1>
             <div className="chat-container" ref={chatContainerRef}>
                 {messages.map((message, index) => (
                 <div 
                     key={index} 
                     className={`message ${message.sender}`}
                 >
+                    {message.sender === 'user' && userData && (
+                        <div className="user-profile">
+                            <img 
+                                src={userData.profile_image_url || '/images/person.png'} 
+                                alt="프로필 이미지" 
+                                className="profile-image"
+                            />
+                            <p className="user-nickname">{userData.nickname}<a>님</a></p>
+                        </div>
+                    )}
                     {Array.isArray(message.text) ? (message.text.map((item, idx) => (
                 <div key={idx}>
                     <p>{item.name}</p>
