@@ -63,9 +63,14 @@ const Main = () => {
               <h2>어서오세요 {userData.nickname}님!</h2>
             </div>
           </div>
-          <button className="chat-button" onClick={goToChatbot}>
-            대화 시작하기
-          </button>
+          <div className="chat-button-container">
+            <button className="chat-button" onClick={goToChatbot}>
+              대화 시작하기
+            </button>
+            <div className="chat-description">
+              반려견 동반가능 식당, 문화시설을 알려드립니다.
+            </div>
+          </div>
         </div>
         <button className="logout-button" onClick={handleLogout}>
           로그아웃

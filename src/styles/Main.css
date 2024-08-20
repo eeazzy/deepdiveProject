@@ -41,14 +41,14 @@
     align-items: center;
     background-color: #EDD274;
     border-radius: 10px;
-    padding: 30px;
+    padding: 10px;
     margin-right: 20px;
 }
 
 .profile-image-wrapper {
     background-color: white;  
     border-radius: 15px;
-    padding: 10px;
+    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,8 +67,14 @@
 
 .user-info h2 {
     margin: 10px 0 0 0;
-    font-size: 23px;
+    font-size: 20px;
     font-weight: normal;
+}
+
+
+.chat-button-container {
+    position: relative;
+    display: inline-block;
 }
 
 .chat-button {
@@ -81,10 +87,45 @@
     font-family: 'DungGeunMo';
     font-size: 25px;
     transition: transform 0.3s;
+    position: relative;
+    z-index: 1;
 }
 
 .chat-button:hover{
     transform: scale(1.1);
+}
+
+.chat-description {
+    visibility: hidden;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* 버튼 위에 표시되도록 위치 설정 */
+    left: 50%;
+    margin-left: -125px; /* 설명 텍스트 가운데 정렬 */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.chat-description::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* 설명 텍스트 아래에 화살표 표시 */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.chat-button-container:hover .chat-description {
+    visibility: visible;
+    opacity: 1;
 }
 
 .logout-button {
