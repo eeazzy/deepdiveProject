@@ -24,3 +24,13 @@
 
 ### 💾 사용자 정보 관리
 - 로그인한 사용자의 프로필을 확인하고, 개인화된 서비스를 제공합니다.
+
+### 화면
+<img width="1330" alt="1" src="https://github.com/user-attachments/assets/6ff019a8-e15a-4416-b7a0-e7ec46e822e5">
+
+<img width="1330" alt="2" src="https://github.com/user-attachments/assets/240c1da9-9af1-46fa-a568-0ac63b48fb5a">
+
+<img width="1321" alt="3" src="https://github.com/user-attachments/assets/dd51270d-28c2-41cc-919d-2618979efcfa">
+
+<img width="1323" alt="4" src="https://github.com/user-attachments/assets/641f0c9e-385b-48d6-b5ec-a00857baccd7">
+
